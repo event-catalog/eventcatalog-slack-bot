@@ -4,11 +4,7 @@ import { resolve } from 'node:path';
 import pc from 'picocolors';
 import { configSchema, type Config } from './schema.js';
 
-const CONFIG_FILES = [
-  'eventcatalog-bot.config.ts',
-  'eventcatalog-bot.config.js',
-  'eventcatalog-bot.config.mjs',
-];
+const CONFIG_FILES = ['eventcatalog-bot.config.ts', 'eventcatalog-bot.config.js', 'eventcatalog-bot.config.mjs'];
 
 export async function loadConfig(configPath?: string): Promise<Config> {
   const cwd = process.cwd();
@@ -31,9 +27,7 @@ export async function loadConfig(configPath?: string): Promise<Config> {
   }
 
   if (!filePath) {
-    throw new Error(
-      `No config file found. Create one of: ${CONFIG_FILES.join(', ')}`
-    );
+    throw new Error(`No config file found. Create one of: ${CONFIG_FILES.join(', ')}`);
   }
 
   console.log(pc.dim(`Loading config from ${filePath}`));
@@ -46,9 +40,7 @@ export async function loadConfig(configPath?: string): Promise<Config> {
     const result = configSchema.safeParse(rawConfig);
 
     if (!result.success) {
-      const errors = result.error.issues
-        .map((issue) => `  - ${issue.path.join('.')}: ${issue.message}`)
-        .join('\n');
+      const errors = result.error.issues.map((issue) => `  - ${issue.path.join('.')}: ${issue.message}`).join('\n');
       throw new Error(`Invalid config:\n${errors}`);
     }
 
@@ -57,8 +49,6 @@ export async function loadConfig(configPath?: string): Promise<Config> {
     if (error instanceof Error && error.message.startsWith('Invalid config')) {
       throw error;
     }
-    throw new Error(
-      `Failed to load config file: ${error instanceof Error ? error.message : String(error)}`
-    );
+    throw new Error(`Failed to load config file: ${error instanceof Error ? error.message : String(error)}`);
   }
 }

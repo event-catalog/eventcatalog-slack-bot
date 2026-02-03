@@ -13,11 +13,7 @@ interface ThreadMessage {
 
 interface SlackClient {
   conversations: {
-    replies: (params: {
-      channel: string;
-      ts: string;
-      limit?: number;
-    }) => Promise<{ messages?: ThreadMessage[] }>;
+    replies: (params: { channel: string; ts: string; limit?: number }) => Promise<{ messages?: ThreadMessage[] }>;
   };
 }
 
@@ -154,17 +150,9 @@ export function registerMentionHandler(app: App, context: BotContext): void {
 
       if (thread_ts) {
         console.log(pc.dim('Fetching thread history...'));
-        conversationHistory = await getThreadHistory(
-          client as unknown as SlackClient,
-          channel,
-          thread_ts,
-          ts,
-          botUserId || ''
-        );
+        conversationHistory = await getThreadHistory(client as unknown as SlackClient, channel, thread_ts, ts, botUserId || '');
         if (conversationHistory.length > 0) {
-          console.log(
-            pc.dim(`Found ${conversationHistory.length} messages in thread`)
-          );
+          console.log(pc.dim(`Found ${conversationHistory.length} messages in thread`));
         }
       }
 
@@ -182,17 +170,14 @@ export function registerMentionHandler(app: App, context: BotContext): void {
 
       // Log tool calls if any
       if (response.toolCalls) {
-        console.log(
-          pc.dim(
-            `Tool calls: ${response.toolCalls.map((t) => t.toolName).join(', ')}`
-          )
-        );
+        console.log(pc.dim(`Tool calls: ${response.toolCalls.map((t) => t.toolName).join(', ')}`));
       }
 
       // Check if we got a response
       if (!response.text || response.text.trim() === '') {
         console.log(pc.yellow('Warning: Empty response from AI agent'));
-        const fallbackMessage = "I found information in your catalog but couldn't generate a response. Please try rephrasing your question.";
+        const fallbackMessage =
+          "I found information in your catalog but couldn't generate a response. Please try rephrasing your question.";
 
         if (statusMessageTs) {
           await client.chat.update({
@@ -258,7 +243,7 @@ export function registerMentionHandler(app: App, context: BotContext): void {
     } catch (error) {
       console.error(pc.red('Error processing mention:'), error);
 
-      const errorMessage = "Sorry, I encountered an error while processing your request. Please try again.";
+      const errorMessage = 'Sorry, I encountered an error while processing your request. Please try again.';
 
       // Update status message with error or post new message
       if (statusMessageTs) {

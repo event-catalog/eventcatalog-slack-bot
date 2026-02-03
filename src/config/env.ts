@@ -16,9 +16,7 @@ export function validateEnv(provider: AiProvider): Env {
   const result = envSchema.safeParse(process.env);
 
   if (!result.success) {
-    const errors = result.error.issues
-      .map((issue) => `  - ${issue.path.join('.')}: ${issue.message}`)
-      .join('\n');
+    const errors = result.error.issues.map((issue) => `  - ${issue.path.join('.')}: ${issue.message}`).join('\n');
     throw new Error(`Missing or invalid environment variables:\n${errors}`);
   }
 
@@ -33,9 +31,7 @@ export function validateEnv(provider: AiProvider): Env {
 
   const requiredKey = providerKeyMap[provider];
   if (!env[requiredKey]) {
-    throw new Error(
-      `Missing API key for provider "${provider}": ${requiredKey} is required`
-    );
+    throw new Error(`Missing API key for provider "${provider}": ${requiredKey} is required`);
   }
 
   return env;

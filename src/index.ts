@@ -36,11 +36,7 @@ program
 
       // Create AI provider
       const model = createAIProvider(config.ai.provider, config.ai.model);
-      console.log(
-        pc.green(
-          `✓ AI provider initialized (${config.ai.provider})`
-        )
-      );
+      console.log(pc.green(`✓ AI provider initialized (${config.ai.provider})`));
 
       // Create and start Slack app
       const app = createSlackApp({
@@ -85,10 +81,7 @@ program
         console.error(error.message);
         console.error();
       } else {
-        console.error(
-          pc.red('Error:'),
-          error instanceof Error ? error.message : String(error)
-        );
+        console.error(pc.red('Error:'), error instanceof Error ? error.message : String(error));
       }
       process.exit(1);
     }
