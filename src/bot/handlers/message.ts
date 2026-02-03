@@ -56,9 +56,7 @@ export function registerMessageHandler(app: App, context: BotContext): void {
       messageOptions.username = context.config.slack.username;
     }
 
-    console.log(
-      pc.cyan(`Auto-reply message in ${msg.channel}: "${userMessage}"`)
-    );
+    console.log(pc.cyan(`Auto-reply message in ${msg.channel}: "${userMessage}"`));
 
     // Post initial status message in thread
     let statusMessageTs: string | undefined;
@@ -105,17 +103,14 @@ export function registerMessageHandler(app: App, context: BotContext): void {
 
       // Log tool calls if any
       if (response.toolCalls) {
-        console.log(
-          pc.dim(
-            `Tool calls: ${response.toolCalls.map((t) => t.toolName).join(', ')}`
-          )
-        );
+        console.log(pc.dim(`Tool calls: ${response.toolCalls.map((t) => t.toolName).join(', ')}`));
       }
 
       // Check if we got a response
       if (!response.text || response.text.trim() === '') {
         console.log(pc.yellow('Warning: Empty response from AI agent'));
-        const fallbackMessage = "I found information in your catalog but couldn't generate a response. Please try rephrasing your question.";
+        const fallbackMessage =
+          "I found information in your catalog but couldn't generate a response. Please try rephrasing your question.";
 
         if (statusMessageTs) {
           await client.chat.update({
@@ -181,7 +176,7 @@ export function registerMessageHandler(app: App, context: BotContext): void {
     } catch (error) {
       console.error(pc.red('Error processing auto-reply:'), error);
 
-      const errorMessage = "Sorry, I encountered an error while processing your message. Please try again.";
+      const errorMessage = 'Sorry, I encountered an error while processing your message. Please try again.';
 
       // Update status message with error or post new message
       if (statusMessageTs) {

@@ -4,10 +4,7 @@ import { createGoogleGenerativeAI } from '@ai-sdk/google';
 import type { LanguageModelV1 } from 'ai';
 import { type AiProvider, DEFAULT_MODELS } from '../config/schema.js';
 
-export function createAIProvider(
-  provider: AiProvider,
-  model?: string
-): LanguageModelV1 {
+export function createAIProvider(provider: AiProvider, model?: string): LanguageModelV1 {
   const modelId = model || DEFAULT_MODELS[provider];
 
   switch (provider) {
