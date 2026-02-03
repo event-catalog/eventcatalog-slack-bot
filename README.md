@@ -1,6 +1,7 @@
 # EventCatalog Slack Bot
 
-<img src="./img/hero.png" alt="EventCatalog Slack Bot" />
+<img width="428" height="454" alt="Screenshot 2026-02-03 at 09 53 31" src="https://github.com/user-attachments/assets/c41969b7-621f-49c4-aafd-9bf50de285b6" />
+
 
 A self-hosted Slack bot that connects to an EventCatalog MCP server, allowing users to query their eventcatalog documentation directly from Slack.
 
