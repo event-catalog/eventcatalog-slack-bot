@@ -1,0 +1,12 @@
+services:
+  eventcatalog-slack-bot:
+    build: .
+    container_name: eventcatalog-slack-bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      # Mount config file
+      - ./eventcatalog-bot.config.ts:/app/eventcatalog-bot.config.ts:ro
+    environment:
+      - NODE_ENV=production
